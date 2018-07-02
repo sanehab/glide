@@ -64,7 +64,7 @@ export default function (Glide, Components, Events) {
             if (!(Glide.isType('slider') && !rewind)) {
               this._o = true
 
-              Glide.index = 0
+              Glide.index = runableSteps - 1
             }
 
             Events.emit('run.end', move)
@@ -84,7 +84,7 @@ export default function (Glide, Components, Events) {
             if (!(Glide.isType('slider') && !rewind)) {
               this._o = true
 
-              Glide.index = length
+              Glide.index = length - runableSteps
             }
 
             Events.emit('run.start', move)

@@ -48,10 +48,10 @@ export default function (Glide, Components, Events) {
       Components.Transition.after(() => {
         Events.emit('translate.jump')
 
-        Translate.set(0)
-      })
+        Translate.set(width * (toInt(Glide.settings.perRun) - 1))
+      });
 
-      return Translate.set((width * length) + (gap * length))
+      return Translate.set((width * length) + (gap * length) + (width * (toInt(Glide.settings.perRun) - 1)))
     }
 
     return Translate.set(context.movement)

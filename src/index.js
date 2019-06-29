@@ -1,11 +1,11 @@
-import defaults from './defaults'
-import { warn } from './utils/log'
-import { mount } from './core/index'
-import { mergeOptions } from './utils/object'
-import { toInt, isObject, isArray } from './utils/unit'
+import defaults from "./defaults";
+import { warn } from "./utils/log";
+import { mount } from "./core/index";
+import { mergeOptions } from "./utils/object";
+import { toInt, isObject, isArray } from "./utils/unit";
 
-import EventsBus from './core/event/events-bus'
-
+import EventsBus from "./core/event/events-bus";
+console.log("glide 3");
 export default class Glide {
   /**
    * Construct glide.
@@ -13,15 +13,15 @@ export default class Glide {
    * @param  {String} selector
    * @param  {Object} options
    */
-  constructor (selector, options = {}) {
-    this._c = {}
-    this._t = []
-    this._e = new EventsBus()
+  constructor(selector, options = {}) {
+    this._c = {};
+    this._t = [];
+    this._e = new EventsBus();
 
-    this.disabled = false
-    this.selector = selector
-    this.settings = mergeOptions(defaults, options)
-    this.index = this.settings.startAt
+    this.disabled = false;
+    this.selector = selector;
+    this.settings = mergeOptions(defaults, options);
+    this.index = this.settings.startAt;
   }
 
   /**
@@ -30,18 +30,18 @@ export default class Glide {
    * @param {Object} extensions Collection of extensions to initialize.
    * @return {Glide}
    */
-  mount (extensions = {}) {
-    this._e.emit('mount.before')
+  mount(extensions = {}) {
+    this._e.emit("mount.before");
 
     if (isObject(extensions)) {
-      this._c = mount(this, extensions, this._e)
+      this._c = mount(this, extensions, this._e);
     } else {
-      warn('You need to provide a object on `mount()`')
+      warn("You need to provide a object on `mount()`");
     }
 
-    this._e.emit('mount.after')
+    this._e.emit("mount.after");
 
-    return this
+    return this;
   }
 
   /**
@@ -50,14 +50,14 @@ export default class Glide {
    * @param  {Array} transformers Collection of transformers.
    * @return {Void}
    */
-  mutate (transformers = []) {
+  mutate(transformers = []) {
     if (isArray(transformers)) {
-      this._t = transformers
+      this._t = transformers;
     } else {
-      warn('You need to provide a array on `mutate()`')
+      warn("You need to provide a array on `mutate()`");
     }
 
-    return this
+    return this;
   }
 
   /**
@@ -66,16 +66,16 @@ export default class Glide {
    * @param {Object} settings
    * @return {Glide}
    */
-  update (settings = {}) {
-    this.settings = mergeOptions(this.settings, settings)
+  update(settings = {}) {
+    this.settings = mergeOptions(this.settings, settings);
 
-    if (settings.hasOwnProperty('startAt')) {
-      this.index = settings.startAt
+    if (settings.hasOwnProperty("startAt")) {
+      this.index = settings.startAt;
     }
 
-    this._e.emit('update')
+    this._e.emit("update");
 
-    return this
+    return this;
   }
 
   /**
@@ -89,10 +89,10 @@ export default class Glide {
    * @param {String} pattern
    * @return {Glide}
    */
-  go (pattern) {
-    this._c.Run.make(pattern)
+  go(pattern) {
+    this._c.Run.make(pattern);
 
-    return this
+    return this;
   }
 
   /**
@@ -101,11 +101,11 @@ export default class Glide {
    * @param {String} distance
    * @return {Glide}
    */
-  move (distance) {
-    this._c.Transition.disable()
-    this._c.Move.make(distance)
+  move(distance) {
+    this._c.Transition.disable();
+    this._c.Move.make(distance);
 
-    return this
+    return this;
   }
 
   /**
@@ -113,10 +113,10 @@ export default class Glide {
    *
    * @return {Glide}
    */
-  destroy () {
-    this._e.emit('destroy')
+  destroy() {
+    this._e.emit("destroy");
 
-    return this
+    return this;
   }
 
   /**
@@ -125,14 +125,14 @@ export default class Glide {
    * @param {Boolean|Number} interval Run autoplaying with passed interval regardless of `autoplay` settings
    * @return {Glide}
    */
-  play (interval = false) {
+  play(interval = false) {
     if (interval) {
-      this.settings.autoplay = interval
+      this.settings.autoplay = interval;
     }
 
-    this._e.emit('play')
+    this._e.emit("play");
 
-    return this
+    return this;
   }
 
   /**
@@ -140,10 +140,10 @@ export default class Glide {
    *
    * @return {Glide}
    */
-  pause () {
-    this._e.emit('pause')
+  pause() {
+    this._e.emit("pause");
 
-    return this
+    return this;
   }
 
   /**
@@ -151,10 +151,10 @@ export default class Glide {
    *
    * @return {Glide}
    */
-  disable () {
-    this.disabled = true
+  disable() {
+    this.disabled = true;
 
-    return this
+    return this;
   }
 
   /**
@@ -162,10 +162,10 @@ export default class Glide {
    *
    * @return {Glide}
    */
-  enable () {
-    this.disabled = false
+  enable() {
+    this.disabled = false;
 
-    return this
+    return this;
   }
 
   /**
@@ -175,10 +175,10 @@ export default class Glide {
    * @param  {Function} handler
    * @return {Glide}
    */
-  on (event, handler) {
-    this._e.on(event, handler)
+  on(event, handler) {
+    this._e.on(event, handler);
 
-    return this
+    return this;
   }
 
   /**
@@ -187,8 +187,8 @@ export default class Glide {
    * @param  {String} name
    * @return {Boolean}
    */
-  isType (name) {
-    return this.settings.type === name
+  isType(name) {
+    return this.settings.type === name;
   }
 
   /**
@@ -196,8 +196,8 @@ export default class Glide {
    *
    * @return {Object}
    */
-  get settings () {
-    return this._o
+  get settings() {
+    return this._o;
   }
 
   /**
@@ -206,11 +206,11 @@ export default class Glide {
    * @param  {Object} o
    * @return {Void}
    */
-  set settings (o) {
+  set settings(o) {
     if (isObject(o)) {
-      this._o = o
+      this._o = o;
     } else {
-      warn('Options must be an `object` instance.')
+      warn("Options must be an `object` instance.");
     }
   }
 
@@ -219,8 +219,8 @@ export default class Glide {
    *
    * @return {Object}
    */
-  get index () {
-    return this._i
+  get index() {
+    return this._i;
   }
 
   /**
@@ -228,8 +228,8 @@ export default class Glide {
    *
    * @return {Object}
    */
-  set index (i) {
-    this._i = toInt(i)
+  set index(i) {
+    this._i = toInt(i);
   }
 
   /**
@@ -237,8 +237,8 @@ export default class Glide {
    *
    * @return {String}
    */
-  get type () {
-    return this.settings.type
+  get type() {
+    return this.settings.type;
   }
 
   /**
@@ -246,8 +246,8 @@ export default class Glide {
    *
    * @return {Boolean}
    */
-  get disabled () {
-    return this._d
+  get disabled() {
+    return this._d;
   }
 
   /**
@@ -255,7 +255,7 @@ export default class Glide {
    *
    * @return {Boolean}
    */
-  set disabled (status) {
-    this._d = !!status
+  set disabled(status) {
+    this._d = !!status;
   }
 }
